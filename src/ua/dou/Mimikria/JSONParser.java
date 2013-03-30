@@ -1,15 +1,13 @@
 package ua.dou.Mimikria;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import ua.dou.Mimikria.music.SoundItem;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: David
@@ -17,20 +15,34 @@ import java.io.InputStreamReader;
  * Time: 16:05
  */
 public class JSONParser {
-    private Context context;
-
-    public JSONParser(Context context) {
-        this.context = context;
-    }
-
     public String getResourceValue(String loadedInput) {
         String value = "";
         try {
             JSONObject jsonObject = new JSONObject(loadedInput);
             value = jsonObject.getString("resource");
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("123", "Get resource: " + e.getMessage());
         }
         return value;
+    }
+
+    public List<SoundItem> getSoundItemList(String loadedInput) {
+        List<SoundItem> soundItemList = new ArrayList<SoundItem>();
+        try {
+            JSONObject massiveObject = new JSONObject(loadedInput);
+            JSONArray jsonArray = massiveObject.getJSONArray("list");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject soundItemJson = jsonArray.getJSONObject(i);
+                SoundItem soundItem = new SoundItem();
+                soundItem.setName(soundItemJson.getString("name"));
+                soundItem.setDuration(soundItemJson.getString("duration"));
+                soundItem.setMp3(soundItemJson.getString("mp3"));
+                soundItem.setThumb(soundItemJson.getString("thumb"));
+                soundItemList.add(soundItem);
+            }
+        } catch (JSONException e) {
+            Log.e("123", "Get sound item list: " + e.getMessage());
+        }
+        return soundItemList;
     }
 }
