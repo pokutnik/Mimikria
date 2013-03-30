@@ -41,4 +41,11 @@
                 android:paddingRight="10dp"
                 />
     </LinearLayout>
+    <Button
+            android:id="@+id/rec_button"
+            android:layout_height="80dp"
+            android:layout_width="80dp"
+            android:text="@string/rec"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"/>
 </LinearLayout>

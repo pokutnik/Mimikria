@@ -9,16 +9,16 @@ import android.os.Parcelable;
  * Time: 18:28
  */
 public class SoundItem implements Parcelable {
+    private String id = "";
     private String name = "";
-    private String duration = "";
     private String thumb = "";
     private String mp3 = "";
 
     public SoundItem() {}
 
     public SoundItem(Parcel in) {
+        id = in.readString();
         name = in.readString();
-        duration = in.readString();
         thumb = in.readString();
         mp3 = in.readString();
     }
@@ -29,14 +29,6 @@ public class SoundItem implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public String getThumb() {
@@ -62,8 +54,8 @@ public class SoundItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(name);
-        parcel.writeString(duration);
         parcel.writeString(thumb);
         parcel.writeString(mp3);
     }
@@ -77,4 +69,12 @@ public class SoundItem implements Parcelable {
             return new SoundItem[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

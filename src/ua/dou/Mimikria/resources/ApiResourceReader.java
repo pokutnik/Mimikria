@@ -42,10 +42,11 @@ public class ApiResourceReader implements ResourceReader {
 
     @Override
     public void startReading() {
+        Thread thread = new Thread(load);
         thread.start();
     }
 
-    private Thread thread = new Thread() {
+    private Runnable load = new Runnable() {
         public void run() {
             try {
                 DefaultHttpClient client = new DefaultHttpClient();
@@ -61,7 +62,7 @@ public class ApiResourceReader implements ResourceReader {
                 HttpResponse response = client.execute(request);
                 int statusCode = response.getStatusLine().getStatusCode();
 
-                if (statusCode != 200) {
+                if (statusCode != 200 && statusCode != 201) {
                     throw new IOException("Status code is not 200");
                 }
 

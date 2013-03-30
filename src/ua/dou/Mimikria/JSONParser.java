@@ -34,8 +34,8 @@ public class JSONParser {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject soundItemJson = jsonArray.getJSONObject(i);
                 SoundItem soundItem = new SoundItem();
+                soundItem.setId(soundItemJson.getString("id"));
                 soundItem.setName(soundItemJson.getString("name"));
-                soundItem.setDuration(soundItemJson.getString("duration"));
                 soundItem.setMp3(soundItemJson.getString("mp3"));
                 soundItem.setThumb(soundItemJson.getString("thumb"));
                 soundItemList.add(soundItem);
