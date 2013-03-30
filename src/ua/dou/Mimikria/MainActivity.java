@@ -2,6 +2,7 @@ package ua.dou.Mimikria;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ua.dou.Mimikria.resources.ResourceReader;
@@ -9,8 +10,10 @@ import ua.dou.Mimikria.resources.ResourceUpdateListener;
 
 public class MainActivity extends Activity implements ResourceUpdateListener {
     private EmailFinder emailFinder;
-    ResourceReader apiResourceReader;
-    ResourceReader voicesResourceReader;
+    private ResourceReader apiResourceReader;
+    private ResourceReader voicesResourceReader;
+    private JSONParser jsonParser;
+
     private ViewGroup rootView;
 
     /**
@@ -21,6 +24,8 @@ public class MainActivity extends Activity implements ResourceUpdateListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         rootView = (ViewGroup) findViewById(R.id.root);
+
+        jsonParser = new JSONParser(this);
 
         apiResourceReader = new ResourceReader("http://172.27.40.20:3000/api/", this);
         apiResourceReader.startReading();
@@ -35,8 +40,10 @@ public class MainActivity extends Activity implements ResourceUpdateListener {
 
     @Override
     public synchronized void onResourceUpdated(String updatedData) {
-        TextView textView = new TextView(this);
-        textView.setText(updatedData);
-        rootView.addView(textView);
+        Log.d("123", "Parsed " + updatedData);
+        String resource = jsonParser.getResourceValue(updatedData);
+        if (resource.equals("voices")) {
+
+        }
     }
 }

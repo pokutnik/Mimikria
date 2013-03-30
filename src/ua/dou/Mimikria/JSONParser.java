@@ -1,6 +1,10 @@
 package ua.dou.Mimikria;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,4 +23,14 @@ public class JSONParser {
         this.context = context;
     }
 
+    public String getResourceValue(String loadedInput) {
+        String value = "";
+        try {
+            JSONObject jsonObject = new JSONObject(loadedInput);
+            value = jsonObject.getString("resource");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
 }
