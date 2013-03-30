@@ -15,7 +15,7 @@ app.configure ->
   app.set 'view engine', 'jade'
   app.use express.static(path.join(__dirname, 'public'))
   app.use express.logger('dev')
-  app.use express.bodyParser()
+  app.use express.bodyParser({uploadDir: path.join(__dirname, 'public/media' })
   app.use express.methodOverride()
   app.use express.cookieParser('secret')
   app.use express.session()
