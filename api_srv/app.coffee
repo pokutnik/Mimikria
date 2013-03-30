@@ -5,7 +5,10 @@ user = require './routes/user'
 http = require 'http'
 path = require 'path'
 fs = require 'fs'
+async = require 'async'
 utils = require './utils'
+User = require './models/user'
+
 
 app = express()
 
@@ -29,16 +32,26 @@ app.configure ->
 app.get '/', routes.index
 app.get '/users', user.list
 
+app.get '/stats', (req, res) ->
+  async.parallel({
+    total_users: (cb) ->
+      User.total(cb)
+  }, (err, stats)->
+    res.send stats
+  )
+
 app.get '/api/', (req, res) ->
   api = utils.loadjson './public/api/index.json'
   api.session = req.session
   res.send api
 
 app.post '/api/', (req, res) ->
-  api = utils.loadjson './public/api/index.json'
-  req.session.email = req.body.email
-  res.send api
+  email = req.session.email = req.body.email
+  User.register email
 
+  api = utils.loadjson './public/api/index.json'
+  api.session = req.session
+  res.send api
 
 
 app.get '/api/voices/', (req, res) ->
