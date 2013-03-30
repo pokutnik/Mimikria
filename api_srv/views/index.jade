@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Welcome to Mimikria
+  section#api
+    h2 api
+    a(href="/api/") GET /api/
+
+    p POST /api/
+    form(action="/api/", method="POST")
+      input(name="email", value="email@example.com")
+      button="submit"
+
+  section#voices
+    h2 voices
+    a(href="/api/voices/") GET /api/voices/

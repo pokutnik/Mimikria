@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
     <TextView
+            android:id="@+id/service_info"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World, MainActivity"
+            />
+    <ListView
+            android:id="@+id/sounds_list"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             />
 </LinearLayout>
 
