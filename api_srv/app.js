@@ -38,7 +38,8 @@ app.get('/api/', function(req, res){
 });
 
 app.post('/api/', function(req, res){
-  res.send(req.body.email);
+  req.session.email = req.body.email;
+  res.send(req.session);
 });
 
 
