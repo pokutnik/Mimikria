@@ -35,7 +35,6 @@ app.get('/users', user.list);
 
 app.get('/api/', function(req, res){
   res.sendfile('./public/api/index.json');
-  console.log('some text');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
