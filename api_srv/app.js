@@ -29,12 +29,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
 app.get('/', routes.index);
 app.get('/users', user.list);
 
 app.get('/api/', function(req, res){
   res.sendfile('./public/api/index.json');
 });
+
+app.post('/api/', function(req, res){
+  res.send(req.body.email);
+});
+
+
 
 app.get('/api/voices/', function(req, res){
   res.sendfile('./public/api/voices/index.json');
