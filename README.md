@@ -1,4 +1,4 @@
-project
-=======
+Mimikria APP
+============
 
-your best ever project for Hackathon
+App for shouting to phone your favorite phrases as close as possible to original.
