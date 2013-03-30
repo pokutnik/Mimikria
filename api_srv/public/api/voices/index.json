@@ -1,0 +1,10 @@
+{
+  "resource": "voices",
+  "list": [
+    { "name": "Sparts",
+      "duration": "3 sec",
+      "thumb": "/static/images/sparta.jpg",
+      "mp3": "/static/sparta.mp3"
+    }
+  ]
+}
