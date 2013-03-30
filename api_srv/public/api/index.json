@@ -1,11 +1,12 @@
 {
-  "about": "Mimikria app, for shouting your favorite phrases"
+  "about": "Mimikria app, for shouting your favorite phrases",
+  "resource": "api",
   "links":[
     {"resource": "voices",
      "link": "/api/voices/"
     },
     {"resource": "profile",
      "link": "/api/profile"
-    },
-  ],
+    }
+  ]
 }

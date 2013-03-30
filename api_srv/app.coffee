@@ -1,9 +1,11 @@
 
-express = require('express')
-routes = require('./routes')
-user = require('./routes/user')
-http = require('http')
-path = require('path')
+express = require 'express'
+routes = require './routes'
+user = require './routes/user'
+http = require 'http'
+path = require 'path'
+fs = require 'fs'
+utils = require './utils'
 
 app = express()
 
@@ -28,7 +30,9 @@ app.get '/', routes.index
 app.get '/users', user.list
 
 app.get '/api/', (req, res) ->
-  res.sendfile './public/api/index.json'
+  api = utils.loadjson './public/api/index.json'
+  api.session = req.session
+  res.send api
 
 app.post '/api/', (req, res) ->
   req.session.email = req.body.email
