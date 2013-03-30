@@ -40,6 +40,11 @@
       "duration": "2 sec",
       "thumb": "/static/images/father.jpg",
       "mp3": "/static/Star_wars_-_i_am_your_father.mp3"
+    },
+    { "name": "Do'h",
+      "duration": "1 sec",
+      "thumb": "/static/images/doh.jpg",
+      "mp3": "/static/Doh.mp3"
     }
   ]
 }
