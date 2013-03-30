@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="10dp">
+    <TextView
+            android:id="@+id/name"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+
+    <ua.dou.Mimikria.widgets.RemoteImageView
+            android:id="@+id/thumb"
+            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+        <ToggleButton
+                android:id="@+id/play_pause"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
+                android:background="@drawable/play_selector"
+                android:textOff=""
+                android:textOn=""
+                />
+        <ProgressBar
+                android:id="@+id/play_progress"
+                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                />
+    </LinearLayout>
+</LinearLayout>

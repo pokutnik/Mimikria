@@ -1,9 +1,12 @@
 package ua.dou.Mimikria;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ua.dou.Mimikria.music.SoundAdapter;
@@ -20,6 +23,9 @@ public class MainActivity extends Activity implements ResourceUpdateListener {
     private ResourceReader apiResourceReader;
     private ResourceReader voicesResourceReader;
     private JSONParser jsonParser;
+    private ListView soundsView;
+    private List<SoundItem> soundItemList;
+
 
     /**
      * Called when the activity is first created.
@@ -28,6 +34,16 @@ public class MainActivity extends Activity implements ResourceUpdateListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        soundsView = (ListView) findViewById(R.id.sounds_list);
+        soundsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, DetailMusicActivity.class);
+                intent.putExtra("SoundItem", soundItemList.get(i));
+                startActivity(intent);
+            }
+        });
 
         jsonParser = new JSONParser();
 
@@ -48,8 +64,7 @@ public class MainActivity extends Activity implements ResourceUpdateListener {
         if (resource.equals("api")) {
             voicesResourceReader.startReading();
         } if (resource.equals("voices")) {
-            List<SoundItem> soundItemList = jsonParser.getSoundItemList(updatedData);
-            ListView soundsView = (ListView) findViewById(R.id.sounds_list);
+            soundItemList = jsonParser.getSoundItemList(updatedData);
             soundsView.setAdapter(new SoundAdapter(this, soundItemList));
         }
     }
