@@ -3,7 +3,6 @@ package ua.dou.Mimikria;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
-import android.util.Patterns;
 
 import java.util.regex.Pattern;
 
@@ -13,6 +12,9 @@ import java.util.regex.Pattern;
  * Time: 15:52
  */
 public class EmailFinder {
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private String possibleEmail;
     private Context context;
 
@@ -21,7 +23,7 @@ public class EmailFinder {
     }
 
     public String getEmail() {
-        Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+        Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
         Account[] accounts = AccountManager.get(context).getAccounts();
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {

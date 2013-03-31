@@ -1,6 +1,11 @@
 package ua.dou.Mimikria.music;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.media.SoundPool;
 import android.os.Environment;
 import android.util.Log;
 
@@ -26,14 +31,12 @@ public class AudioRecorder {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
             recorder.prepare();
+            recorder.start();
         } catch (IOException e) {
-            Log.e("123", "prepare() failed");
         }
 
-        recorder.start();
     }
 
     public void stopRecording() {

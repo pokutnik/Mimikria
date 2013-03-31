@@ -1,6 +1,8 @@
-package ua.dou.Mimikria;
+package ua.dou.Mimikria.resources;
 
 import android.content.Context;
+import ua.dou.Mimikria.DataReader;
+import ua.dou.Mimikria.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,15 +14,17 @@ import java.io.InputStreamReader;
  * Date: 30.03.13
  * Time: 16:22
  */
-public class RawReader implements DataReader {
+public class RawReader implements ResourceReader {
     private Context context;
+    private ResourceUpdateListener resourceUpdateListener;
 
-    public RawReader(Context context) {
+    public RawReader(Context context, ResourceUpdateListener resourceUpdateListener) {
+        this.resourceUpdateListener = resourceUpdateListener;
         this.context = context;
     }
 
     @Override
-    public String readData() {
+    public void startReading() {
         InputStream inputStream = context.getResources().openRawResource(R.raw.first_input);
 
         InputStreamReader inputreader = new InputStreamReader(inputStream);
@@ -34,8 +38,9 @@ public class RawReader implements DataReader {
                 text.append('\n');
             }
         } catch (IOException e) {
-            return null;
         }
-        return text.toString();
+        if (resourceUpdateListener != null) {
+            resourceUpdateListener.onResourceUpdated(text.toString());
+        }
     }
 }
