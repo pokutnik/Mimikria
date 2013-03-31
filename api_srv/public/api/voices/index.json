@@ -2,48 +2,48 @@
   "resource": "voices",
   "list": [
     { "name": "This is Sparta!",
-      "duration": "2 sec",
       "thumb": "/static/images/Sparta.png",
+      "id": "this_is_sparta",
       "mp3": "/static/This_is_-_SPARTA.mp3"
     },
     { "name": "You shall not pass!",
-      "duration": "4 sec",
       "thumb": "/static/images/you_shall_not_pass.png",
+      "id": "shall_not_pass",
       "mp3": "/static/You_Shall_Not_Pass.mp3"
     },
     { "name": "Адвокат!",
-      "duration": "1 sec",
       "thumb": "/static/images/advokat.png",
+      "id": "advokat",
       "mp3": "/static/Advokat.mp3"
     },
     { "name": "Nooooo",
-      "duration": "5 sec",
       "thumb": "/static/images/nooooo.jpg",
+      "id": "nooooo",
       "mp3": "/static/Darth_Vader_-_Nooooooo.mp3"
     },
     { "name": "First blood",
-      "duration": "1 sec",
       "thumb": "/static/images/first.jpg",
+      "id": "first_blood",
       "mp3": "/static/First_blood.mp3"
     },
     { "name": "Monster KILL",
-      "duration": "2 sec",
       "thumb": "/static/images/Monster_kill.png",
+      "id": "monster_kill",
       "mp3": "/static/mmmmmonster_kill.mp3"
     },
     { "name": "Нужно больше золота",
-      "duration": "2 sec",
       "thumb": "/static/images/gold.jpg",
+      "id": "need_more_gold",
       "mp3": "/static/Need_more_gold.mp3"
     },
     { "name": "I am your father",
-      "duration": "2 sec",
       "thumb": "/static/images/father.jpg",
+      "id": "iam_your_father",
       "mp3": "/static/Star_wars_-_i_am_your_father.mp3"
     },
     { "name": "Do'h",
-      "duration": "1 sec",
       "thumb": "/static/images/doh.jpg",
+      "id": "doh",
       "mp3": "/static/Doh.mp3"
     }
   ]
