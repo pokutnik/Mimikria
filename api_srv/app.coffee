@@ -69,7 +69,10 @@ app.post '/api/shouts/', (req, res) ->
 
 app.get '/api/shouts/:shout_id', (req, res) ->
   Shout.get_by_id req.params.shout_id, (shout) ->
-    res.send(shout)
+    if shout
+      res.send(shout)
+    else
+      res.status(404).send(shout)
 
 http.createServer(app).listen app.get('port'), ->
   console.log "Express server listening on port " + app.get('port')
