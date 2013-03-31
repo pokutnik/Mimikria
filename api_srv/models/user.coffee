@@ -6,6 +6,4 @@ User = module.exports = {
     redis.sadd 'users.all', email, cb
   total: (cb) ->
     redis.scard 'users.all', cb
-  shout: (voice_id, shout_id, cb) ->
-    cb()
 }
