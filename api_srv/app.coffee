@@ -6,6 +6,7 @@ async = require 'async'
 
 User = require './models/user'
 utils = require './utils'
+Shout = require './models/shout'
 
 app = express()
 
@@ -51,12 +52,16 @@ app.get '/api/voices/', (req, res) ->
   console.log req.session
 
 app.post '/api/shouts/', (req, res) ->
-  console.log "body", req.body
-  res.status(201).send({
-    'accepted': true,
-    'processed': false,
-    'link': "/api/shouts/1234"
-  })
+  email = req.session.email
+  voice_id = req.body.id
+  shout_path = req.files.filedata?.path
+  shout = path.basename(shout_path)
+  Shout.upload voice_id, email, path, (shout_id)->
+    res.status(201).send({
+      'accepted': true,
+      'processed': false,
+      'link': "/api/shouts/#{shout_id}"
+    })
 
 
 http.createServer(app).listen app.get('port'), ->
