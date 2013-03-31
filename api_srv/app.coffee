@@ -15,7 +15,7 @@ app.configure ->
   app.set 'view engine', 'jade'
   app.use express.static(path.join(__dirname, 'public'))
   app.use express.logger('dev')
-  app.use express.bodyParser({uploadDir: path.join(__dirname, 'public/media' })
+  app.use express.bodyParser({uploadDir: path.join(__dirname, 'public/media')})
   app.use express.methodOverride()
   app.use express.cookieParser('secret')
   app.use express.session()
@@ -51,8 +51,7 @@ app.get '/api/voices/', (req, res) ->
   console.log req.session
 
 app.post '/api/shouts/', (req, res) ->
-  console.log "BBODY", req.body
-  console.log "FFILES", req.files
+  console.log "body", req.body
   res.status(201).send({
     'accepted': true,
     'processed': false,
