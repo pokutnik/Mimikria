@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import ua.dou.Mimikria.music.AudioRecorder;
+import ua.dou.Mimikria.music.ProcessingResult;
 import ua.dou.Mimikria.music.SoundItem;
+import ua.dou.Mimikria.resources.ProcessReader;
 import ua.dou.Mimikria.resources.ResourceReader;
 import ua.dou.Mimikria.resources.ResourceUpdateListener;
 import ua.dou.Mimikria.resources.ShoutResourceReader;
@@ -105,7 +107,7 @@ public class DetailMusicActivity extends Activity implements ResourceUpdateListe
                     MediaPlayer player = new MediaPlayer();
                     player.setDataSource(afd.getFileDescriptor());
                     player.prepare();
-                    player.setOnCompletionListener( new MediaPlayer.OnCompletionListener() {
+                    player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
                             audioRecorder.startRecording();
@@ -130,21 +132,6 @@ public class DetailMusicActivity extends Activity implements ResourceUpdateListe
                 recButton.setEnabled(true);
                 audioRecorder.stopRecording();
                 MediaPlayer mediaPlayer = MediaPlayer.create(DetailMusicActivity.this, Uri.parse(audioRecorder.getFileName()));
-                drawView = (DrawView) findViewById(R.id.equalizer);
-                visualizer = new Visualizer(mediaPlayer.getAudioSessionId());
-                visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-                visualizer.setEnabled(true);
-                visualizer.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
-                    @Override
-                    public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
-                        drawView.setFft(bytes);
-                    }
-
-                    @Override
-                    public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
-                        drawView.setFft(bytes);
-                    }
-                }, Visualizer.getMaxCaptureRate(), true, true);
                 mediaPlayer.start();
                 shoutResourceReader.startReading();
             }
@@ -159,5 +146,42 @@ public class DetailMusicActivity extends Activity implements ResourceUpdateListe
     public void onResourceUpdated(String updatedData) {
         File file = new File(audioRecorder.getFileName());
         file.delete();
+        JSONParser jsonParser = new JSONParser();
+        ProcessingResult processingResult = jsonParser.getProcessingResult(updatedData);
+        UpdateProcess updateProcess = new UpdateProcess(processingResult);
+        Thread updateThread = new Thread(updateProcess);
+        updateThread.start();
+    }
+
+
+    private class UpdateProcess implements Runnable {
+        private volatile ProcessingResult processingResult;
+        private ResourceUpdateListener processResourceUpdateListener = new ResourceUpdateListener() {
+            @Override
+            public void onResourceUpdated(String updatedData) {
+                JSONParser jsonParser = new JSONParser();
+                ProcessingResult updatedResult = jsonParser.getProcessingResult(updatedData);
+                processingResult.setProcessed(updatedResult.isProcessed());
+            }
+        };
+        private ResourceReader processingReader;
+
+        public UpdateProcess(ProcessingResult processingResult) {
+            this.processingResult = processingResult;
+            this.processingReader = new ProcessReader("http://172.27.40.20:3000/api/shouts/"+processingResult.getLink(),
+                    processResourceUpdateListener);
+        }
+
+        @Override
+        public void run() {
+            while (!processingResult.isProcessed()) {
+                processingReader.startReading();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+
+                }
+            }
+        }
     }
 }

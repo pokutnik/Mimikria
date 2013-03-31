@@ -4,6 +4,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ua.dou.Mimikria.music.ProcessingResult;
 import ua.dou.Mimikria.music.SoundItem;
 
 import java.util.ArrayList;
@@ -44,5 +45,16 @@ public class JSONParser {
             Log.e("123", "Get sound item list: " + e.getMessage());
         }
         return soundItemList;
+    }
+
+    public ProcessingResult getProcessingResult(String input) {
+        ProcessingResult processingResult = new ProcessingResult();
+        JSONObject processingObject = new JSONObject();
+        try {
+            processingResult.setLink(processingObject.getString("link"));
+            processingResult.setProcessed(processingObject.getBoolean("processed"));
+        } catch (JSONException e) {
+        }
+        return processingResult;
     }
 }
